@@ -13,14 +13,6 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @ClassName LoginServiceImpl
- * @Description TODO
- * @Author ultraman
- * @Date 2023/3/2 19:42
- * @Version 1.0
- */
-
 @Service
 public class LoginServiceImpl implements LoginService {
 
@@ -29,17 +21,18 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public Map<String, String> getToken(String username, String password) {
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
-        Authentication authenticate = authenticationManager.authenticate(authenticationToken); // 登陆失败会自动处理
-        UserDetailsImpl loginUser = (UserDetailsImpl) authenticate.getDetails();
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(username, password);
+
+        Authentication authenticate = authenticationManager.authenticate(authenticationToken);  // 登录失败，会自动处理
+        UserDetailsImpl loginUser = (UserDetailsImpl) authenticate.getPrincipal();
         User user = loginUser.getUser();
         String jwt = JwtUtil.createJWT(user.getId().toString());
 
         Map<String, String> map = new HashMap<>();
         map.put("error_message", "success");
         map.put("token", jwt);
-        return null;
 
-
+        return map;
     }
 }
