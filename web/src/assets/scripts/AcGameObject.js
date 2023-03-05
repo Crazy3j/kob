@@ -29,17 +29,18 @@ export class AcGameObject {
 }
 
 let last_timestamp; // 上一次执行的时刻
-const step = () => {
+const step = timestamp => {
     for(let obj of AC_GAME_OBJECTS){
         if(!obj.has_called_start){
             obj.has_called_start= true;
             obj.start();
         }
         else{
-            obj.timedelta = obj.timestamp - last_timestamp;
+            obj.timedelta = timestamp - last_timestamp;
             obj.update();
         }
     }
+    last_timestamp = timestamp;
     requestAnimationFrame(step)
 }
 requestAnimationFrame(step);
