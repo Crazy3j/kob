@@ -25,9 +25,7 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                aria-expanded="false">
-<!--              {{ $store.state.user.username }}-->
               {{ user.state.username }}
-
             </a>
 
             <ul class="dropdown-menu" aria-label="navbarDropdown">

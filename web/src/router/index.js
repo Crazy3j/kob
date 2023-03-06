@@ -6,7 +6,8 @@ import UserBotIndex from "@/views/user/bot/UserBotIndex.vue";
 import NotFound from "@/views/error/NotFound.vue";
 import UserAccountLoginView from "@/views/user/account/UserAccountLoginView.vue";
 import UserAccountRegisterView from "@/views/user/account/UserAccountRegisterView.vue";
-import store from "@/store/index";
+import user from "@/store/user";
+
 
 const routes = [
     {
@@ -85,9 +86,9 @@ const router = createRouter({
     routes
 })
 router.beforeEach((to, from, next) => {
-    if(to.meta.requeestAuth && !store.state.user.is_login){
-        next({name:"user_account_login"});
-    }else{
+    if (to.meta.requestAuth && !user.state.is_login) {
+        next({name: "user_account_login"});
+    } else {
         next();
     }
 

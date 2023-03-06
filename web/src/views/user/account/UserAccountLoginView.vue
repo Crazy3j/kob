@@ -1,6 +1,6 @@
 <template>
 
-  <ContentField v-if="!$store.state.user.pulling_info">
+  <ContentField v-if="!user.state.pulling_info">
     <div class="row justify-content-md-center">
       <div class="col-3">
         <form @submit.prevent="login">
@@ -25,8 +25,14 @@ import ContentField from "@/components/ContentField.vue";
 import {useStore} from "vuex";
 import {ref} from "vue";
 import router from "@/router/index";
+import user from "@/store/user";
 
 export default {
+  computed: {
+    user() {
+      return user
+    }
+  },
 
   components: {
     ContentField,
