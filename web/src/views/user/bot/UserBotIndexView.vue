@@ -4,7 +4,7 @@
       <div class="col-3">
         <div class="card" style="margin-top: 20px;">
           <div class="card-body">
-            <img :src="user.state.photo" alt="" style="width: 100%;"/>
+            <img :src="$store.state.user.photo" alt="" style="width: 100%;"/>
           </div>
         </div>
       </div>
@@ -129,7 +129,7 @@
 
 <script>
 
-import user from "@/store/user";
+import user from "@/store/modules/user";
 import {ref, reactive} from 'vue';
 import $ from 'jquery';
 import {Modal} from "bootstrap/dist/js/bootstrap";
@@ -168,7 +168,7 @@ export default {
         url: "http://127.0.0.1:3000/user/bot/getlist/",
         type: "get",
         headers: {
-          Authorization: "Bearer " + user.state.token,
+          Authorization: "Bearer " + this.$store.state.user.token,
         },
         success(resp) {
           bots.value = resp;
@@ -188,7 +188,7 @@ export default {
           content: botAdd.content,
         },
         headers: {
-          Authorization: "Bearer " + user.state.token,
+          Authorization: "Bearer " + this.$store.state.user.token,
         },
         success(resp) {
           if (resp.error_message === "success") {
@@ -217,7 +217,7 @@ export default {
           content: bot.content,
         },
         headers: {
-          Authorization: "Bearer " + user.state.token,
+          Authorization: "Bearer " + this.$store.state.user.token,
         },
         success(resp) {
           if (resp.error_message === "success") {
@@ -238,7 +238,7 @@ export default {
           bot_id: bot.id,
         },
         headers: {
-          Authorization: "Bearer " + user.state.token,
+          Authorization: "Bearer " + this.$store.state.user.token,
         },
         success(resp) {
           if (resp.error_message === "success") {

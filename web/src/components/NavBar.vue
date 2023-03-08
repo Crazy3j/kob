@@ -21,11 +21,12 @@
             </router-link>
           </li>
         </ul>
-        <ul class="navbar-nav" v-if="user.state.is_login">
+        <ul class="navbar-nav" v-if="$store.state.user.is_login">
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                aria-expanded="false">
-              {{ user.state.username }}
+              {{ $store.state.user.username }}
+
             </a>
 
             <ul class="dropdown-menu" aria-label="navbarDropdown">
@@ -35,7 +36,7 @@
           </li>
 
         </ul>
-        <ul class="navbar-nav" v-else-if="!user.state.pulling_info">
+        <ul class="navbar-nav" v-else-if="!$store.state.user.pulling_info">
           <li class="nav-item ">
             <router-link class="nav-link" :to="{name:'user_account_login'}" role="button">
               登录
@@ -56,14 +57,9 @@
 import {useRoute} from "vue-router";
 import {computed} from "vue";
 import {useStore} from "vuex";
-import user from "../store/user";
+
 
 export default {
-  computed: {
-    user() {
-      return user
-    },
-  },
 
   setup() {
 

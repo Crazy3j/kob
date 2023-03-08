@@ -1,8 +1,8 @@
 import {createStore} from 'vuex'
-import ModuleUser from './user'
-import ModulePk from './pk'
+import ModuleUser from '@/store/modules/user'
+import ModulePk from '@/store/modules/pk'
 
-export default createStore({
+const store = createStore({
     state: {},
     getters: {},
     mutations: {},
@@ -11,4 +11,6 @@ export default createStore({
         user: ModuleUser,
         pk: ModulePk,
     }
+
 })
+export default store;
