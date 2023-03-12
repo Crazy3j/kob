@@ -4,6 +4,7 @@ const pk = {
         socket: null,
         opponent_username: "",
         opponent_photo: "",
+        game_map:null,
     },
     getters: {},
     mutations: {
@@ -16,6 +17,9 @@ const pk = {
         },
         updateStatus(state, status) {
             state.status = status;
+        },
+        updateGameMap(state,game_map){
+            state.game_map=game_map;
         }
     },
     actions: {},

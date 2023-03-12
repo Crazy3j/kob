@@ -23,18 +23,29 @@ export default {
       store.commit("updateOpponent", {
         username: "我的对手",
         photo: "https://cdn.acwing.com/media/article/image/2022/08/09/1_1db2488f17-anonymous.png"
-                https://cdn.acwing.com/media/article/image/2022/08/09/1_1db2488f17-anonymous.png
+
       })
 
       socket = new WebSocket(socketUrl);
 
       socket.onopen = () => {
         console.log("connected!");
+        store.commit("updateSocket",socket);
       };
 
       socket.onmessage = msg => {
         const data = JSON.parse(msg.data);
-        console.log(data);
+        if (data.event === "start-matching") { //匹配成功
+          store.commit("updateOpponent", {
+            username: data.opponent_username,
+            photo: data.opponent_photo,
+          });
+            setTimeout(()=>{
+              store.commit("updateStatus","playing");
+            },2000);
+            store.commit("updateGameMap",data.game_map);
+
+        }
       }
 
       socket.onclose = () => {
@@ -44,6 +55,7 @@ export default {
 
     onUnmounted(() => {
       socket.close();
+      store.commit("updateStatus","matching");
     });
   }
 }

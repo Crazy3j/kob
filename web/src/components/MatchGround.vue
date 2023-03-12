@@ -18,15 +18,42 @@
           {{ $store.state.pk.opponent_username }}
         </div>
       </div>
+      <div class="col-12" style="text-align: center; padding-top: 15vh;">
+        <button @click="click_match_btn" type="button" class="btn btn-warning btn-lg">{{ match_btn_info }}</button>
+      </div>
     </div>
   </div>
 
 </template>
 
 <script>
+import {ref} from 'vue'
+import {useStore} from 'vuex'
 
+export default {
 
-export default {}
+  setup() {
+    const store = useStore();
+    let match_btn_info = ref("开始匹配");
+    const click_match_btn = () => {
+      if (match_btn_info.value === "开始匹配") {
+        match_btn_info.value = "取消";
+        store.state.pk.socket.send(JSON.stringify({
+          event: "start-matching",
+        }))
+      } else {
+        match_btn_info.value = "开始匹配";
+        store.state.pk.socket.send(JSON.stringify({
+          event: "start-matching",
+        }))
+      }
+    }
+    return {
+      match_btn_info,
+      click_match_btn,
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -34,17 +61,20 @@ div.matchground {
   width: 60vw;
   height: 70vh;
   margin: 40px auto;
-  background-color: rgba(50,50,50,0.5);
+  background-color: rgba(50, 50, 50, 0.5);
 }
-div.user-photo{
+
+div.user-photo {
   text-align: center;
   padding-top: 10vh;
 }
-div.user-photo>img{
+
+div.user-photo > img {
   border-radius: 50%;
   width: 20vh;
 }
-div.user-username{
+
+div.user-username {
   text-align: center;
   font-size: 24px;
   font-weight: 600;
