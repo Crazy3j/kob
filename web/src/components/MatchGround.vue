@@ -19,7 +19,9 @@
         </div>
       </div>
       <div class="col-12" style="text-align: center; padding-top: 15vh;">
-        <button @click="click_match_btn" type="button" class="btn btn-warning btn-lg">{{ match_btn_info }}</button>
+        <button @click="click_match_btn" type="button" class="btn btn-warning btn-lg">
+          {{ match_btn_info }}
+        </button>
       </div>
     </div>
   </div>
@@ -44,7 +46,7 @@ export default {
       } else {
         match_btn_info.value = "开始匹配";
         store.state.pk.socket.send(JSON.stringify({
-          event: "start-matching",
+          event: "stop-matching",
         }))
       }
     }
