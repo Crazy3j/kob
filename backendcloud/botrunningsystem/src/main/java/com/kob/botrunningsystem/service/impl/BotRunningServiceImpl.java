@@ -1,0 +1,21 @@
+package com.kob.botrunningsystem.service.impl;
+
+import com.kob.botrunningsystem.service.BotRunningService;
+import org.springframework.stereotype.Service;
+
+/**
+ * @ClassName BotRunningServiceImpl
+ * @Description TODO
+ * @Author ultraman
+ * @Date 2023/4/17 2:20
+ * @Version 1.0
+ */
+
+@Service
+public class BotRunningServiceImpl implements BotRunningService {
+    @Override
+    public String addBot(Integer userId, String botCode, String input) {
+        System.out.println("add bot:"+userId+" "+botCode+" "+ input);
+        return "add bot success";
+    }
+}
