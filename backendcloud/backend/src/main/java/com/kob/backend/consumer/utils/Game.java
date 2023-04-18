@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.kob.backend.consumer.WebSocketServer;
 import com.kob.backend.pojo.Bot;
 import com.kob.backend.pojo.Record;
+import com.kob.backend.pojo.User;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
@@ -22,19 +23,18 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 
 public class Game extends Thread {
+    private final static int[] dx = {-1, 0, 1, 0}, dy = {0, 1, 0, -1};
+    final private static String addBotUrl = "http://127.0.0.1:3002/bot/add/";
     private final Integer rows;
     private final Integer cols;
     private final Integer inner_walls_count;
     private final int[][] g;
-    private final static int[] dx = {-1, 0, 1, 0}, dy = {0, 1, 0, -1};
     private final Player playerA, playerB;
+    private final ReentrantLock lock = new ReentrantLock();
+    private String loser = ""; // all: 平局，A: a输 B:b输
     private Integer nextStepA = null;
     private Integer nextStepB = null;
-    private final ReentrantLock lock = new ReentrantLock();
     private String status = "playing"; // playing -> finished
-
-    private String loser = ""; // all: 平局，A: a输 B:b输
-    final private static String addBotUrl = "http://127.0.0.1:3002/bot/add/";
 
     public Game(Integer rows,
                 Integer cols,
@@ -226,7 +226,30 @@ public class Game extends Thread {
         return res.toString();
     }
 
+    private void updateUserRating(Player player, Integer rating) {
+        
+        User user = WebSocketServer.userMapper.selectById(player.getId());
+        user.setRating(rating);
+        WebSocketServer.userMapper.updateById(user);
+
+    }
+
     private void saveToDataBase() {
+
+        Integer ratingA = WebSocketServer.userMapper.selectById(playerA.getId()).getRating();
+        Integer ratingB = WebSocketServer.userMapper.selectById(playerB.getId()).getRating();
+
+        if ("A".equals(loser)) {
+            ratingA -= 2;
+            ratingB += 5;
+        } else if ("B".equals(loser)) {
+            ratingA += 5;
+            ratingB -= 2;
+        }
+
+        updateUserRating(playerA, ratingA);
+        updateUserRating(playerB, ratingB);
+
         Record record = new Record(
                 null,
                 playerA.getId(),

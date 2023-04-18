@@ -1,4 +1,4 @@
-package com.kob.backend.service.impl.bot;
+package com.kob.backend.service.impl.user.bot;
 
 import com.kob.backend.mapper.BotMapper;
 import com.kob.backend.pojo.Bot;

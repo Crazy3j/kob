@@ -2,7 +2,7 @@ package com.kob.backend.controller.bot;
 
 import com.kob.backend.pojo.Bot;
 
-import com.kob.backend.service.user.Bot.GetListService;
+import com.kob.backend.service.user.bot.GetListService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

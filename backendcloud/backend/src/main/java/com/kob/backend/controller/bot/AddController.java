@@ -1,6 +1,6 @@
 package com.kob.backend.controller.bot;
 
-import com.kob.backend.service.user.Bot.AddService;
+import com.kob.backend.service.user.bot.AddService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
