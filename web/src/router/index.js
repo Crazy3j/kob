@@ -1,8 +1,9 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import PKIndexView from "@/views/pk/PKIndexView.vue";
-import RankListIndex from "@/views/ranklist/RankListIndex.vue";
-import RecordIndex from "@/views/record/RecordIndex.vue";
-import UserBotIndex from "@/views/user/bot/UserBotIndexView.vue";
+import RecordIndexView from "@/views/record/RecordIndexView.vue";
+import RecordContentView from "@/views/record/RecordContentView.vue";
+import RankListIndexView from "@/views/ranklist/RankListIndexView.vue";
+import UserBotIndexView from "@/views/user/bot/UserBotIndexView.vue";
 import NotFound from "@/views/error/NotFound.vue";
 import UserAccountLoginView from "@/views/user/account/UserAccountLoginView.vue";
 import UserAccountRegisterView from "@/views/user/account/UserAccountRegisterView.vue";
@@ -30,7 +31,7 @@ const routes = [
     {
         path: "/ranklist/",
         name: "ranklist_index",
-        component: RankListIndex,
+        component: RankListIndexView,
         meta: {
             requestAuth: true,
         }
@@ -38,7 +39,15 @@ const routes = [
     {
         path: "/record/",
         name: "record_index",
-        component: RecordIndex,
+        component: RecordIndexView,
+        meta: {
+            requestAuth: true,
+        }
+    },
+    {
+        path: "/record/:recordId/",
+        name: "record_content",
+        component: RecordContentView,
         meta: {
             requestAuth: true,
         }
@@ -46,7 +55,7 @@ const routes = [
     {
         path: "/user/bot/",
         name: "user_bot_index",
-        component: UserBotIndex,
+        component: UserBotIndexView,
         meta: {
             requestAuth: true,
         }
