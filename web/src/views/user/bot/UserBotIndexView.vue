@@ -135,6 +135,7 @@ import $ from 'jquery';
 import {Modal} from "bootstrap/dist/js/bootstrap";
 import {VAceEditor} from 'vue3-ace-editor';
 import ace from 'ace-builds';
+import {useStore} from "vuex";
 
 
 export default {
@@ -151,10 +152,10 @@ export default {
     ace.config.set(
         "basePath",
         "https://cdn.jsdelivr.net/npm/ace-builds@" + require('ace-builds').version + "/src-noconflict/"
-
     );
 
 
+    const store = useStore();
     let bots = ref([]);
 
     const botAdd = reactive({
@@ -168,7 +169,7 @@ export default {
         url: "http://127.0.0.1:3000/user/bot/getlist/",
         type: "get",
         headers: {
-          Authorization: "Bearer " + this.$store.state.user.token,
+          Authorization: "Bearer " + store.state.user.token,
         },
         success(resp) {
           bots.value = resp;
@@ -188,7 +189,7 @@ export default {
           content: botAdd.content,
         },
         headers: {
-          Authorization: "Bearer " + this.$store.state.user.token,
+          Authorization: "Bearer " + store.state.user.token,
         },
         success(resp) {
           if (resp.error_message === "success") {
@@ -217,7 +218,7 @@ export default {
           content: bot.content,
         },
         headers: {
-          Authorization: "Bearer " + this.$store.state.user.token,
+          Authorization: "Bearer " + store.state.user.token,
         },
         success(resp) {
           if (resp.error_message === "success") {
@@ -238,7 +239,7 @@ export default {
           bot_id: bot.id,
         },
         headers: {
-          Authorization: "Bearer " + this.$store.state.user.token,
+          Authorization: "Bearer " + store.state.user.token,
         },
         success(resp) {
           if (resp.error_message === "success") {
