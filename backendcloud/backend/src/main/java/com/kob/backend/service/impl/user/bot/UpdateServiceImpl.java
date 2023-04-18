@@ -3,10 +3,8 @@ package com.kob.backend.service.impl.bot;
 import com.kob.backend.mapper.BotMapper;
 import com.kob.backend.pojo.Bot;
 import com.kob.backend.pojo.User;
-import com.kob.backend.service.impl.utils.UserDetailsImpl;
-import com.kob.backend.service.user.Bot.AddService;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
+import com.kob.backend.service.impl.utils.UserUtilImpl;
+import com.kob.backend.service.user.bot.UpdateService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -15,29 +13,29 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @ClassName AddServiceImpl
+ * @ClassName UpdateServiceImpl
  * @Description TODO
- * @Author ultraman
- * @Date 2023/3/5 0:48
+ * @Author Ultraman
+ * @Date 2023/3/6 0:19
  * @Version 1.0
  */
 
 @Service
-public class AddServiceImpl implements AddService {
+public class UpdateServiceImpl implements UpdateService {
 
     @Resource
     private BotMapper botMapper;
 
     @Override
-    public Map<String, String> add(Map<String, String> data) {
-        UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl loginUser = (UserDetailsImpl) authenticationToken.getPrincipal();
-        User user = loginUser.getUser();
+    public Map<String, String> update(Map<String, String> data) {
+
+        User user = UserUtilImpl.getUser();
+
+        int bot_id = Integer.parseInt(data.get("bot_id"));
 
         String title = data.get("title");
         String description = data.get("description");
         String content = data.get("content");
-
         Map<String, String> map = new HashMap<>();
 
         if (title == null || title.length() == 0) {
@@ -69,12 +67,30 @@ public class AddServiceImpl implements AddService {
             return map;
         }
 
-        Date now = new Date();
-        Bot bot = new Bot(null, user.getId(), title, description, content, now, now);
+        Bot bot = botMapper.selectById(bot_id);
 
+        if (bot == null) {
+            map.put("error_message", "Bot不存在或已被删除");
+            return map;
+        }
 
-        botMapper.insert(bot);
+        if (!bot.getUserId().equals(user.getId())) {
+            map.put("error_message", "没有权限修改该bot");
+            return map;
+        }
+
+        Bot new_bot = new Bot(
+                bot.getId(),
+                user.getId(),
+                title,
+                description,
+                content,
+                bot.getCreateTime(),
+                new Date()
+        );
+        botMapper.updateById(new_bot);
         map.put("error_message", "success");
+
 
         return map;
     }

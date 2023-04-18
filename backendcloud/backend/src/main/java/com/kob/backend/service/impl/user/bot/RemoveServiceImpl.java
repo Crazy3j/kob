@@ -4,7 +4,7 @@ import com.kob.backend.mapper.BotMapper;
 import com.kob.backend.pojo.Bot;
 import com.kob.backend.pojo.User;
 import com.kob.backend.service.impl.utils.UserUtilImpl;
-import com.kob.backend.service.user.Bot.RemoveService;
+import com.kob.backend.service.user.bot.RemoveService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
