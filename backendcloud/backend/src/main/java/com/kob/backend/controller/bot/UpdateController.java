@@ -22,7 +22,7 @@ public class UpdateController {
     @Resource
     private UpdateService updateService;
 
-    @PostMapping("/user/bot/update/")
+    @PostMapping("/api/user/bot/update/")
     public Map<String, String> update(@RequestParam Map<String, String> data) {
         return updateService.update(data);
     }

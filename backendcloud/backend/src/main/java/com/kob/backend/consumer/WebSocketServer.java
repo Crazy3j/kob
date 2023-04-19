@@ -45,8 +45,8 @@ public class WebSocketServer {
     public static RestTemplate restTemplate;
     public Game game = null;
 
-    private final static String addPlayerUrl = "http://127.0.0.1:3001/player/add/";
-    private final static String removePlayerUrl = "http://127.0.0.1:3001/player/remove/";
+    private final static String addPlayerUrl = "https://app5293.acapp.acwing.com.cn/api/player/add/";
+    private final static String removePlayerUrl = "https://app5293.acapp.acwing.com.cn/api/player/remove/";
 
 
     @Resource
